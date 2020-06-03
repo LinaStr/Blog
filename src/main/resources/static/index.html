@@ -1,0 +1,13 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Music Blog</title>
+    <style th:replace="fragments/main.html :: menustyle"></style>
+</head>
+<body>
+    <h1>Sveiki atvykę į muzikos blogą</h1>
+    <button th:href="@{/blogentries}">Skaityti įrašus</button>
+    <div th:replace="fragments/main.html :: footer"></div>
+
+</body>
+</html>

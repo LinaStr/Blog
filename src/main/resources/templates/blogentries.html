@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Music Blog</title>
+    <style th:replace="fragments/main.html :: menustyle"></style>
+</head>
+<body>
+<div th:replace="fragments/main.html :: menu(user = ${user})"></div>
+<table>
+    <thead>
+    <tr>
+        <td>Pavadinimas</td>
+        <td>Sukurta/Redaguota</td>
+        <td>Skaityti daugiau</td>
+        <td>Komentarai</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="blogEntry : ${blogEntries}">
+        <td th:text="${blogEntry.title}" />
+        <td th:text="${blogEntry.createdOn != null ? blogEntry.createdOn : blogEntry.updatedOn}" />
+
+        <td>
+            <a th:href="@{/blogentries/{blogEntryId}(blogEntryId=${blogEntry.id})}">
+                Plačiau
+            </a>
+        </td>
+
+        <td th:if="${not blogEntry.commentsList.empty}">
+            <a th:href="@{/blogentries/{blogEntryId}/comments(blogEntryId=${blogEntry.id})}"
+               th:text="'Skaityti komentarus ' + ${#lists.size(blogEntry.commentsList)}">
+
+
+        </a>
+        </td>
+
+
+    </tr>
+    </tbody>
+</table>
+<a th:if="${pageNumber ne empty and pageNumber ne 0}" th:href="@{/blogentries(pageNumber=${pageNumber - 1})}"> < </a>
+<a th:if="${hasNextPage}" th:href="@{/blogentries(pageNumber=${pageNumber + 1})}"> > </a>
+<a th:href="@{/blogentries/newblogentry}"
+   sec:authorize="hasRole('ADMIN')">
+    Kurti nauja blogo įrašą
+</a>
+<div th:replace="fragments/main.html :: footer"></div>
+
+
+</body>
+</html>

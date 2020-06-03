@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Music Blog</title>
+    <style th:replace="fragments/main.html :: menustyle"></style>
+</head>
+<body>
+    <div th:replace="fragments/main.html :: menu(user = ${user})"></div>
+
+    <h1>Naujas blogo įrašas</h1>
+    <form th:action="@{/blogentries/newblogentry}" method="post" th:object="${blogentry}">
+        <input type="hidden" th:field="*{id}"/>
+
+        <p>Pavadinimas: <input type="text" th:field="*{title}" />
+
+        <p>Blogo tekstas: <input type="text" th:field="*{blogContent}"/></p>
+
+
+        <p> <input type="submit" th:value="${blogentry.id != null ? #messages.msg('redaguoti') : #messages.msg('kurti')}"/> </p>
+
+    </form>
+
+    <div th:replace="fragments/main.html :: footer"></div>
+</body>
+</html>

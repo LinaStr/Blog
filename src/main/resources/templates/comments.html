@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Music Blog</title>
+    <style th:replace="fragments/main.html :: menustyle"></style>
+</head>
+<body>
+<div th:replace="fragments/main.html :: menu(user = ${user})"></div>
+
+<h1 th:if="${comments.empty}">Komentarų nėra :(</h1>
+
+<table th:if="${not comments.empty}">
+    <thead>
+    <tr>
+        <td>Vartotojas</td>
+        <td>Komentaras</td>
+    </tr>
+    </thead>
+    <tbody>
+<!--    <tr th:if="${not comments.empty}">-->
+<!--        <h1>Komentarų nėra</h1>-->
+<!--    </tr>-->
+    <tr
+        th:each="comment : ${comments}">
+        <td th:text="${comment.getUser().getUsername()}" />
+        <td th:text="${comment.commentText}" />
+
+        <td sec:authorize="hasRole('ADMIN')">
+            <a
+               th:href="@{/blogentries/{blogEntryId}/comments/delete/{commentId}(blogEntryId=${blogEntryId}, commentId=${comment.id})}">Trinti komentarą</a>
+        </td>
+    </tr>
+    </tbody>
+
+    <a sec:authorize="isAnonymous()" th:href="@{/prisijungimas}">Prisijunkite, kad galėtumėte komentuoti</a>
+
+    <form sec:authorize="isAuthenticated()"
+          th:action="@{/blogentries/{blogEntryId}/comments/newcomment(blogEntryId=${blogEntryId})}"
+          method="post"
+          th:object="${comment}">
+
+<!--        <input type="hidden" th:field="*{id}"/>-->
+            <p>Komentaras: <input type="text" th:field="*{commentText}" /> </p>
+
+            <p> <input type="submit" th:value="Komentuoti"></p>
+    </form>
+
+
+<p>
+<!--    <a th:href="@{/blogentries/{blogEntryId}/comments(blogEntryId=${blogEntry.id})}">komentuoti</a>-->
+</p>
+
+<div th:replace="fragments/main.html :: footer"></div>
+</body>
+</html>
