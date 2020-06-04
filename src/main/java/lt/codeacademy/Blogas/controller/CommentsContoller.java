@@ -68,7 +68,8 @@ public class CommentsContoller {
         comment.setBlogEntry(blogEntry);
 
         Comment newComment = commentService.createOrUpdateComment(comment);
-        model.addAttribute("newcomment", newComment);
+        Comment emptyComment = new Comment();
+        model.addAttribute("comment", emptyComment);
         model.addAttribute("blogEntryId", blogEntryId);
 
         List<Comment> comments = commentService.getAllCommentsForBlogEntry(blogEntryId);
