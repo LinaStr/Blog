@@ -9,13 +9,14 @@
 <body>
 <div th:replace="fragments/main.html :: menu(user = ${user})"></div>
 
-<h1 th:if="${comments.empty}">Komentarų nėra :(</h1>
+<h1 th:if="${comments.empty}"
+    th:text="#{komentaruNera}">Komentarų nėra :(</h1>
 
 <table th:if="${not comments.empty}">
     <thead>
     <tr>
-        <td>Vartotojas</td>
-        <td>Komentaras</td>
+        <td th:text="#{vartotojasKomentaruose}">Vartotojas</td>
+        <td th:text="#{komentaras}">Komentaras</td>
     </tr>
     </thead>
     <tbody>
@@ -29,12 +30,15 @@
 
         <td sec:authorize="hasRole('ADMIN')">
             <a
-               th:href="@{/blogentries/{blogEntryId}/comments/delete/{commentId}(blogEntryId=${blogEntryId}, commentId=${comment.id})}">Trinti komentarą</a>
+               th:href="@{/blogentries/{blogEntryId}/comments/delete/{commentId}(blogEntryId=${blogEntryId}, commentId=${comment.id})}"
+               th:text="#{trintiKomentara}">Trinti komentarą</a>
         </td>
     </tr>
     </tbody>
 
-    <a sec:authorize="isAnonymous()" th:href="@{/prisijungimas}">Prisijunkite, kad galėtumėte komentuoti</a>
+    <a sec:authorize="isAnonymous()"
+       th:href="@{/prisijungimas}"
+       th:text="#{prisijunkitKadKomentuotumet}">Prisijunkite, kad galėtumėte komentuoti</a>
 
     <form sec:authorize="isAuthenticated()"
           th:action="@{/blogentries/{blogEntryId}/comments/newcomment(blogEntryId=${blogEntryId})}"
@@ -42,9 +46,10 @@
           th:object="${comment}">
 
 <!--        <input type="hidden" th:field="*{id}"/>-->
-            <p>Komentaras: <input type="text" th:field="*{commentText}" /> </p>
+            <p th:text="#{komentaras}">Komentaras: </p>
+            <p><input type="text" th:field="*{commentText}" /></p>
 
-            <p> <input type="submit" th:value="Komentuoti"></p>
+            <p> <input type="submit" th:value="#{komentuoti}"></p>
     </form>
 
 

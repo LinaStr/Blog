@@ -50,6 +50,8 @@ public class CommentsContoller {
     public String deleteComment(@PathVariable Long commentId, @PathVariable Long blogEntryId, Model model, @AuthenticationPrincipal User user) {
         commentService.deleteComment(commentId);
         List<Comment> comments = commentService.getAllCommentsForBlogEntry(blogEntryId);
+        Comment newComment = new Comment();
+        model.addAttribute("comment", newComment);
         model.addAttribute("comments", comments);
         return "comments";
     }

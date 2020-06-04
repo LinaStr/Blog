@@ -12,14 +12,17 @@
 <h1 th:text="${blogEntry.title}"></h1>
 <p th:text="${blogEntry.blogContent}"></p>
 
-<a th:href="@{/blogentries/{blogEntryId}/comments(blogEntryId=${blogEntry.id})}">Skaityti komentarus ar komentuoti</a>
+<a th:href="@{/blogentries/{blogEntryId}/comments(blogEntryId=${blogEntry.id})}"
+   th:text="#{skaitytiKomentarusArKomentuoti}">Skaityti komentarus ar komentuoti</a>
 <p>
     <a sec:authorize="hasRole('ADMIN')"
-       th:href="@{/blogentries/{blogEntryId}/update(blogEntryId=${blogEntry.id})}">Redaguoti</a>
+       th:href="@{/blogentries/{blogEntryId}/update(blogEntryId=${blogEntry.id})}"
+       th:text="#{redaguotiBlogoIrasa}">Redaguoti</a>
 </p>
 <p>
     <a sec:authorize="hasRole('ADMIN')"
-       th:href="@{/blogentries/{blogEntryId}/delete(blogEntryId=${blogEntry.id})}">Ištrinti</a>
+       th:href="@{/blogentries/{blogEntryId}/delete(blogEntryId=${blogEntry.id})}"
+       th:text="#{istrinti}">Ištrinti</a>
 </p>
 
 <div th:replace="fragments/main.html :: footer"></div>

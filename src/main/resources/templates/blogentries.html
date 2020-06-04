@@ -11,10 +11,10 @@
 <table>
     <thead>
     <tr>
-        <td>Pavadinimas</td>
-        <td>Sukurta/Redaguota</td>
-        <td>Skaityti daugiau</td>
-        <td>Komentarai</td>
+        <td th:text="#{pavadinimas}">Pavadinimas</td>
+        <td th:text="#{sukurtaRedaguota}">Sukurta/Redaguota</td>
+        <td th:text="#{skaitytiDaugiau}">Skaityti daugiau</td>
+        <td th:text="#{komentarai}">Komentarai</td>
     </tr>
     </thead>
     <tbody>
@@ -23,14 +23,14 @@
         <td th:text="${blogEntry.createdOn != null ? blogEntry.createdOn : blogEntry.updatedOn}" />
 
         <td>
-            <a th:href="@{/blogentries/{blogEntryId}(blogEntryId=${blogEntry.id})}">
+            <a th:text="#{placiau}" th:href="@{/blogentries/{blogEntryId}(blogEntryId=${blogEntry.id})}">
                 Plačiau
             </a>
         </td>
 
         <td th:if="${not blogEntry.commentsList.empty}">
             <a th:href="@{/blogentries/{blogEntryId}/comments(blogEntryId=${blogEntry.id})}"
-               th:text="'Skaityti komentarus ' + ${#lists.size(blogEntry.commentsList)}">
+               th:text="#{skaitytiKomentarus} + ${#lists.size(blogEntry.commentsList)}">
 
 
         </a>
@@ -43,7 +43,8 @@
 <a th:if="${pageNumber ne empty and pageNumber ne 0}" th:href="@{/blogentries(pageNumber=${pageNumber - 1})}"> < </a>
 <a th:if="${hasNextPage}" th:href="@{/blogentries(pageNumber=${pageNumber + 1})}"> > </a>
 <a th:href="@{/blogentries/newblogentry}"
-   sec:authorize="hasRole('ADMIN')">
+   sec:authorize="hasRole('ADMIN')"
+   th:text="#{kurtiNaujaBlogoIrasa}">
     Kurti nauja blogo įrašą
 </a>
 <div th:replace="fragments/main.html :: footer"></div>
